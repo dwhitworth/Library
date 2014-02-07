@@ -25,10 +25,13 @@ class Book
 end
 
 class Borrower
-  attr_reader :name
+  attr_accessor :name, :count
+
   def initialize(name)
     @name = name
+    @count = 0
   end
+
 end
 
 class Library
@@ -49,11 +52,18 @@ class Library
   end
 
   def check_out_book(book_id, borrower)
-    if @books[book_id].status == 'available'
-      @books[book_id].check_out
-      @borrower = borrower
-      @books[book_id]
+    borrower.count += 1
+    if borrower.count > 2
+      nil
+    else
+      if @books[book_id].status == 'available'
+        @books[book_id].check_out
+        @borrower = borrower
+        @books[book_id]
+      end
     end
+
+
   end
 
   def check_in_book(book)
@@ -61,9 +71,11 @@ class Library
   end
 
   def available_books
+
   end
 
   def borrowed_books
+
   end
 
   def get_borrower(book)
