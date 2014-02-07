@@ -42,13 +42,15 @@ class Library
   end
 
   def register_new_book(title, author)
-    @books.push(Book.new(title, author, books.count + 1))
+    @books.push(Book.new(title, author, books.count))
   end
 
   def add_book(title, author)
   end
 
   def check_out_book(book_id, borrower)
+    @books[book_id].check_out
+    @books[book_id]
   end
 
   def check_in_book(book)
