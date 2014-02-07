@@ -35,9 +35,11 @@ class Borrower
 end
 
 class Library
-
+  attr_accessor :available_books, :borrowed_books
   def initialize(name = nil)
     @books = []
+    @available_books = []
+    @borrowed_books = {}
   end
 
   def books
@@ -46,6 +48,7 @@ class Library
 
   def register_new_book(title, author)
     @books.push(Book.new(title, author, books.count))
+    @available_books.push(Book.new(title, author, books.count))
   end
 
   def add_book(title, author)
@@ -59,6 +62,8 @@ class Library
       if @books[book_id].status == 'available'
         @books[book_id].check_out
         @borrower = borrower
+        @gone = @available_books.pop(book_id)
+        # @borrowed_books.push @gone
         @books[book_id]
       end
     end
@@ -70,13 +75,9 @@ class Library
     book.check_in
   end
 
-  def available_books
+  # def borrowed_books
 
-  end
-
-  def borrowed_books
-
-  end
+  # end
 
   def get_borrower(book)
     @borrower.name
